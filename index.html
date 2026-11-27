@@ -4,26 +4,56 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#111827">
+  <meta name="description" content="Spiele Vier Gewinnt lokal gegen Freunde oder gegen die KI.">
   <title>Vier Gewinnt</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <main class="app">
     <header class="topbar">
-      <a class="brand" href="#" aria-label="Vier Gewinnt Startseite"><span class="brand-mark">4</span><span>Gewinnt</span></a>
+      <a class="brand" href="#" aria-label="Vier Gewinnt Startseite">
+        <span class="brand-mark">4</span>
+        <span>Gewinnt</span>
+      </a>
+
       <div class="top-actions">
-        <button id="soundButton" class="icon-button" type="button" aria-label="Sprachausgabe umschalten">🔊</button>
-        <button id="newGameButton" class="primary-button" type="button">Neues Spiel</button>
+        <button id="soundButton" class="icon-button"
+          type="button" aria-label="Sprachausgabe umschalten"
+          aria-pressed="true">🔊</button>
+
+        <button id="newGameButton" class="primary-button"
+          type="button">Neues Spiel</button>
       </div>
     </header>
 
-    <section class="game-layout">
+    <section class="game-layout" aria-label="Vier-Gewinnt-Spiel">
+
       <aside class="panel side-panel">
         <h2>Spielmodus</h2>
-        <div class="mode-list" role="radiogroup" aria-label="Spielmodus">
-          <button class="mode-button active" data-mode="local" type="button"><span>👥</span><span><b>Lokal</b><small>Zu zweit</small></span></button>
-          <button class="mode-button" data-mode="ai" type="button"><span>🤖</span><span><b>KI-Gegner</b><small id="difficultyLabel">Leicht</small></span></button>
-          <button class="mode-button" data-mode="online" type="button"><span>🌐</span><span><b>Online</b><small>Privater Raum</small></span></button>
+
+        <div class="mode-list" role="radiogroup"
+          aria-label="Spielmodus">
+
+          <button class="mode-button active"
+            data-mode="local" type="button"
+            role="radio" aria-checked="true">
+            <span aria-hidden="true">👥</span>
+            <span><b>Lokal</b><small>Zu zweit</small></span>
+          </button>
+
+          <button class="mode-button"
+            data-mode="ai" type="button"
+            role="radio" aria-checked="false">
+            <span aria-hidden="true">🤖</span>
+            <span><b>KI-Gegner</b><small id="difficultyLabel">Leicht</small></span>
+          </button>
+
+          <button class="mode-button"
+            data-mode="online" type="button"
+            role="radio" aria-checked="false">
+            <span aria-hidden="true">🌐</span>
+            <span><b>Online</b><small>Privater Raum</small></span>
+          </button>
         </div>
 
         <div id="difficultyPanel" class="control-group" hidden>
@@ -37,51 +67,122 @@
 
         <div id="onlinePanel" class="control-group" hidden>
           <label>Privater Raum</label>
-          <button id="createRoomButton" class="secondary-button" type="button">Raum erstellen</button>
+
+          <button id="createRoomButton"
+            class="secondary-button" type="button">
+            Raum erstellen
+          </button>
+
           <div class="room-row">
-            <input id="roomCodeInput" maxlength="6" placeholder="CODE" aria-label="Einladungscode">
-            <button id="joinRoomButton" class="secondary-button" type="button">Beitreten</button>
+            <input id="roomCodeInput"
+              maxlength="6"
+              placeholder="CODE"
+              aria-label="Einladungscode"
+              autocomplete="off"
+              spellcheck="false">
+
+            <button id="joinRoomButton"
+              class="secondary-button" type="button">
+              Beitreten
+            </button>
           </div>
-          <p id="roomStatus" class="room-status"></p>
+
+          <p id="roomStatus" class="room-status"
+            role="status" aria-live="polite"></p>
         </div>
       </aside>
 
       <section class="game-card" aria-label="Spielfeld">
+
         <div class="players">
+
           <div id="player1Card" class="player-card active">
-            <span class="avatar red">R</span>
-            <div><small>Spieler 1</small><strong id="player1Name">Rot</strong></div>
-            <span id="player1Score" class="score">0</span>
+            <span class="avatar red" aria-hidden="true">R</span>
+            <div>
+              <small>Spieler 1</small>
+              <strong id="player1Name">Rot</strong>
+            </div>
+            <span id="player1Score" class="score"
+              aria-label="Punktestand Rot">0</span>
           </div>
-          <div class="turn-indicator" id="turnIndicator">Am Zug</div>
+
+          <div class="turn-indicator"
+            id="turnIndicator" aria-hidden="true">
+            Am Zug
+          </div>
+
           <div id="player2Card" class="player-card">
-            <span class="avatar yellow">G</span>
-            <div><small id="player2Label">Spieler 2</small><strong id="player2Name">Gelb</strong></div>
-            <span id="player2Score" class="score">0</span>
+            <span class="avatar yellow" aria-hidden="true">G</span>
+            <div>
+              <small id="player2Label">Spieler 2</small>
+              <strong id="player2Name">Gelb</strong>
+            </div>
+            <span id="player2Score" class="score"
+              aria-label="Punktestand Gelb">0</span>
           </div>
+
         </div>
 
         <div id="boardWrapper" class="board-wrapper">
-          <div id="columnHints" class="column-hints" aria-hidden="true"></div>
-          <div id="board" class="board" role="grid" aria-label="Vier-Gewinnt-Spielfeld"></div>
+          <div id="columnHints" class="column-hints"
+            aria-label="Spalten auswählen"></div>
+
+          <div id="board" class="board"
+            role="grid"
+            aria-label="Vier-Gewinnt-Spielfeld mit 7 Spalten und 6 Reihen">
+          </div>
         </div>
 
-        <div id="gameMessage" class="game-message" role="status">Spieler Rot ist am Zug</div>
-        <button id="spotButton" class="spot-button" type="button">⚡ Spot senden</button>
+        <div id="gameMessage" class="game-message"
+          role="status" aria-live="polite">
+          Spieler Rot ist am Zug
+        </div>
+
+        <button id="spotButton" class="spot-button"
+          type="button">
+          ⚡ Spot senden
+        </button>
+
       </section>
 
-      <aside class="panel stats-panel">
+      <aside class="panel stats-panel"
+        aria-label="Spielstatistik">
+
         <h2>Statistik</h2>
+
         <div class="stat-grid">
-          <div><span id="playedStat">0</span><small>Spiele</small></div>
-          <div><span id="winsStat">0</span><small>Siege</small></div>
-          <div><span id="drawStat">0</span><small>Remis</small></div>
+          <div>
+            <span id="playedStat">0</span>
+            <small>Spiele</small>
+          </div>
+
+          <div>
+            <span id="winsStat">0</span>
+            <small>Siege</small>
+          </div>
+
+          <div>
+            <span id="drawStat">0</span>
+            <small>Remis</small>
+          </div>
         </div>
+
         <h3>Spielverlauf</h3>
-        <div id="history" class="history"><p>Noch keine Spiele</p></div>
+
+        <div id="history" class="history">
+          <p>Noch keine Spiele</p>
+        </div>
+
       </aside>
+
     </section>
   </main>
+
+  <!-- Spiel-Engine zuerst laden! -->
+  <script src="game.js"></script>
+
+  <!-- Danach die Benutzeroberfläche -->
   <script src="app.js"></script>
+
 </body>
 </html>
